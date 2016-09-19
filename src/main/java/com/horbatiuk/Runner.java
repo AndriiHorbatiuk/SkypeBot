@@ -59,7 +59,6 @@ public class Runner {
             }
             long finish = System.currentTimeMillis();
             finish = finish - start;
-            System.out.println("Total = " +  finish);
         }*/
     }
 }
