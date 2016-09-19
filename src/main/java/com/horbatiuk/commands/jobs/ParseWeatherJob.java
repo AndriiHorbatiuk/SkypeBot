@@ -20,7 +20,7 @@ public final class ParseWeatherJob implements Jobable {
     public void doJob(Chat chat) throws ConnectionException, NoSuchContactException, ChatNotFoundException, InvalidCredentialsException, InterruptedException, IOException {
 
         Document parsePage = null;
-//        Sinoptik
+        //Sinoptik
         parsePage = HtmlPageParser.parseWebPage(ParserSinoptik.WEBSITE);
         ParserSinoptik.getInstance.setCurrentTemp(WeatherParser.parseCurrentTemperature(parsePage, ParserSinoptik.getInstance));
         ParserSinoptik.getInstance.setMinTemp(WeatherParser.parseMinTemperature(parsePage, ParserSinoptik.getInstance));

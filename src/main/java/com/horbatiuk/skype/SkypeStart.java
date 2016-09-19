@@ -12,7 +12,6 @@ import com.samczsun.skype4j.exceptions.NotParticipatingException;
  */
 public class SkypeStart {
     public void run() {
-        SkypeCommandsData.initBotCommands();
         try {
             Skype skype = SkypeUtils.skypeLogin(SkypeUtils.authorisationToSkype());
             skype.loadAllContacts();

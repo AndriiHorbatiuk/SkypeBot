@@ -1,5 +1,7 @@
 package com.horbatiuk.scheduller.schedullerTasks;
 
+import com.horbatiuk.skype.SkypeUtils;
+
 import java.util.TimerTask;
 
 /**
@@ -7,14 +9,13 @@ import java.util.TimerTask;
  */
 public final class WeatherSchedullerTask extends TimerTask {
 
-    public static WeatherSchedullerTask weatherSchedullerTask = new WeatherSchedullerTask();
+    public static WeatherSchedullerTask getInstance = new WeatherSchedullerTask();
 
     private WeatherSchedullerTask() {
     }
 
     @Override
     public void run() {
-
 
 
     }

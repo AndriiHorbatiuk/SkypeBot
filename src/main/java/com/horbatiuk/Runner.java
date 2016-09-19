@@ -2,6 +2,9 @@ package com.horbatiuk;
 
 
 
+import com.horbatiuk.commands.SkypeCommandsData;
+import com.horbatiuk.scheduller.Scheduler;
+import com.horbatiuk.scheduller.schedullerTasks.WeatherSchedullerTask;
 import com.horbatiuk.skype.SkypeStart;
 import com.horbatiuk.utils.Heroku5MinutesPing;
 import com.horbatiuk.utils.HerokuPortBind;
@@ -13,8 +16,10 @@ public class Runner {
 
         HerokuPortBind.bindPort();
         new SkypeStart().run();
+        SkypeCommandsData.initBotCommands();
         Thread herokuPinger = new Thread(new Heroku5MinutesPing());
         herokuPinger.start();
+        Scheduler.setScheduller(Scheduler.setTimeForExecute(), WeatherSchedullerTask.getInstance);
 //        Thread watching = new Thread(new StartWatching());
 //        watching.start();
 
