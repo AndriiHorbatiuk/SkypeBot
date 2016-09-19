@@ -19,6 +19,12 @@ import java.io.IOException;
  * Created by Andrey on 16.09.2016.
  */
 public final class ParseFuelJob implements Jobable {
+
+    public final static ParseFuelJob getInstance = new ParseFuelJob();
+
+    private ParseFuelJob() {
+    }
+
     @Override
     public void doJob(Chat chat) throws ConnectionException, NoSuchContactException, ChatNotFoundException, InvalidCredentialsException, InterruptedException, IOException {
         //Minfin

@@ -3,12 +3,16 @@ package com.horbatiuk.skype;
 
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.SkypeBuilder;
-import com.samczsun.skype4j.Visibility;
 import com.samczsun.skype4j.chat.Chat;
+import com.samczsun.skype4j.chat.messages.ChatMessage;
 import com.samczsun.skype4j.exceptions.*;
 import com.samczsun.skype4j.formatting.Message;
 import com.samczsun.skype4j.formatting.Text;
 import com.samczsun.skype4j.participants.info.Contact;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SkypeUtils {
 
@@ -18,35 +22,80 @@ public class SkypeUtils {
         }).build();
     }
 
-    public static Skype skypeLogin(Skype authorizedSkype) throws ConnectionException, NotParticipatingException, InvalidCredentialsException {
-        authorizedSkype.login();
-        authorizedSkype.subscribe();
-        System.out.println("loged in");
+    public static Skype skypeLogin(Skype authorizedSkype) {
+        try {
+            authorizedSkype.login();
+            authorizedSkype.subscribe();
+        } catch (InvalidCredentialsException e) {
+            e.printStackTrace();
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (NotParticipatingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Loged in to Skype");
         return authorizedSkype;
     }
 
-    public static Skype sendMessageToUser(Skype logedInSkype, String userName, String message) throws ConnectionException, ChatNotFoundException, InvalidCredentialsException {
-        Skype skype = logedInSkype;
-        Contact contact = skype.getOrLoadContact(userName);
+    public static void sendMessageToUser(Skype logedInSkype, String userName, String message) {
+        Contact contact = null;
+        try {
+            contact = logedInSkype.getOrLoadContact(userName);
             Chat chat = contact.getPrivateConversation();
             chat.sendMessage(Message.create().with(Text.plain(message)));
-        System.out.println("message sent");
-        return skype;
+            logedInSkype.logout();
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (ChatNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Private message sent");
     }
 
     public static void sendMessageToChat(Chat chat, String msg) throws ConnectionException {
         chat.sendMessage(msg);
     }
 
-    public static Skype addContactToContactList(Skype logedInSkype, String userName) throws ConnectionException, NotParticipatingException, InvalidCredentialsException, NoSuchContactException {
-        Skype skype = logedInSkype;
-        Contact contact = skype.getOrLoadContact(SkypeConstants.SKYPEUSER);
-        if(!contact.isAuthorized()){
-            contact.authorize();
+    public static Skype addContactToContactList(Skype logedInSkype, String userName) {
+        Contact contact = null;
+        try {
+            contact = logedInSkype.getOrLoadContact(SkypeConstants.SKYPEUSER);
+            if (!contact.isAuthorized()) {
+                contact.authorize();
+            }
+            contact.sendRequest("Hello!");
+            return logedInSkype;
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (NoSuchContactException e) {
+            e.printStackTrace();
         }
-        contact.sendRequest("Hello!");
-        return skype;
+        return logedInSkype;
     }
 
+    public static Chat getChatFromUserName(String userName) throws ConnectionException, ChatNotFoundException {
+        Skype skype = skypeLogin(authorisationToSkype());
+            return skype.getOrLoadContact(userName).getPrivateConversation();
+    }
+
+    public static LinkedList<String> getListOfMessagesWithWord(Skype skype, String word) {
+        Contact contact = skype.getContact(SkypeConstants.USER_TO_SEND_NOTIFICATIONS);
+        LinkedList<String> result = new LinkedList<>();
+        try {
+            Chat chat = contact.getPrivateConversation();
+            List<ChatMessage> listOfmsg = chat.getAllMessages();
+            for (ChatMessage cm : listOfmsg) {
+                if (cm.getContent().asPlaintext().contains(word)) {
+                    result.add(cm.getContent().asPlaintext());
+                }
+            }
+            return result;
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (ChatNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
 

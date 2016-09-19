@@ -1,6 +1,11 @@
 package com.horbatiuk.watchers.watchingData;
 
-import java.io.*;
+import com.horbatiuk.skype.SkypeConstants;
+import com.horbatiuk.skype.SkypeUtils;
+import com.samczsun.skype4j.exceptions.ChatNotFoundException;
+import com.samczsun.skype4j.exceptions.ConnectionException;
+
+import java.util.LinkedList;
 
 /**
  * Created by Andrey on 16.09.2016.
@@ -11,8 +16,6 @@ public final class ChiccoWatcherData implements iWatching {
     public static final ChiccoWatcherData getInstance = new ChiccoWatcherData();
     private String data = "";
 
-    private final String filePath = "src/main/resources/banner_url_chicco.txt";
-
     private String msg = null;
 
     private ChiccoWatcherData() {
@@ -21,31 +24,20 @@ public final class ChiccoWatcherData implements iWatching {
 
     public String getData() {
         if (data.equals("")) {
-            try (BufferedReader br = new BufferedReader(new FileReader(filePath));) {
-                String line;
-                if ((line = br.readLine()) != null) {
-                    data = line;
-                    return data;
-                }
-                else {
-                    return "";
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            LinkedList<String> listOfMsgs = SkypeUtils.getListOfMessagesWithWord(SkypeUtils.skypeLogin(SkypeUtils.authorisationToSkype()),
+                    "http://chicco.com.ua");
+            data = listOfMsgs.getLast();
         }
         return data;
     }
 
     public void setData(String data) {
         this.data = data;
-        try (FileWriter fw = new FileWriter(filePath);) {
-            fw.write(data);
-            fw.flush();
-        } catch (IOException e) {
+        try {
+            SkypeUtils.sendMessageToChat(SkypeUtils.getChatFromUserName(SkypeConstants.USER_TO_SEND_NOTIFICATIONS),"Запоминаю url баннера: http://www.chicco.com.ua" + data);
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        } catch (ChatNotFoundException e) {
             e.printStackTrace();
         }
     }

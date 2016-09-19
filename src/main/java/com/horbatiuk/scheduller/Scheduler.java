@@ -19,7 +19,7 @@ public class Scheduler {
         Timer timer = new Timer();
         timer.schedule(task, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)); // 60*60*24*100 = 8640000ms
     }
-
+//@TODO Вынести время в отдельную сущность
     public static Calendar setTimeForExecute() {
         TimeZone timeZone = TimeZone.getTimeZone("Europe/Kiev");
         Calendar today = Calendar.getInstance();

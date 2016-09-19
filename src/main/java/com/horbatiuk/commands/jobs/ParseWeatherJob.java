@@ -16,6 +16,11 @@ import java.io.IOException;
  */
 public final class ParseWeatherJob implements Jobable {
 
+    public final static ParseWeatherJob getInstance = new ParseWeatherJob();
+
+    private ParseWeatherJob() {
+    }
+
     @Override
     public void doJob(Chat chat) throws ConnectionException, NoSuchContactException, ChatNotFoundException, InvalidCredentialsException, InterruptedException, IOException {
 
