@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="weatherSkypeBot:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/weatherSkypeBot_jar</output-path>
+    <root id="archive" name="weatherSkypeBot.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="SkypeBot" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.9.2/jsoup-1.9.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/skype4j-0.2.0-SNAPSHOT.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

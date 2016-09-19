@@ -24,8 +24,8 @@ public final class SkypeCommandsData<T extends Jobable>{
     }
 
     public static void initBotCommands(){
-        getInstance.getListOfCommands().put("!погода", ParseWeatherJob.getInstance);
-        getInstance.getListOfCommands().put("!бенз", ParseFuelJob.getInstance);
+        getInstance.getListOfCommands().put("!погода", new ParseWeatherJob());
+        getInstance.getListOfCommands().put("!бенз", new ParseFuelJob());
     }
 
 }

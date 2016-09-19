@@ -1,5 +1,7 @@
 package com.horbatiuk.scheduller;
 
+import com.horbatiuk.scheduller.schedullerTasks.Schedulable;
+
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.Timer;
@@ -13,10 +15,11 @@ import java.util.concurrent.TimeUnit;
 public class Scheduler {
 
     public static <T extends TimerTask, Schedulable> void setScheduller(Calendar today, T task) {
+
         Timer timer = new Timer();
         timer.schedule(task, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)); // 60*60*24*100 = 8640000ms
     }
-//@TODO Вынести время в отдельную сущность
+
     public static Calendar setTimeForExecute() {
         TimeZone timeZone = TimeZone.getTimeZone("Europe/Kiev");
         Calendar today = Calendar.getInstance();
