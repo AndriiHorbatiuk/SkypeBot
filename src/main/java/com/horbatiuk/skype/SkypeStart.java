@@ -19,11 +19,6 @@ public class SkypeStart {
             skype.getEventDispatcher().registerListener(new MessageListener());
         } catch (ConnectionException e) {
             e.printStackTrace();
-        } catch (NotParticipatingException e) {
-            e.printStackTrace();
-        } catch (InvalidCredentialsException e) {
-            e.printStackTrace();
         }
-
     }
 }

@@ -75,27 +75,7 @@ public class SkypeUtils {
 
     public static Chat getChatFromUserName(String userName) throws ConnectionException, ChatNotFoundException {
         Skype skype = skypeLogin(authorisationToSkype());
-            return skype.getOrLoadContact(userName).getPrivateConversation();
-    }
-
-    public static LinkedList<String> getListOfMessagesWithWord(Skype skype, String word) {
-        Contact contact = skype.getContact(SkypeConstants.USER_TO_SEND_NOTIFICATIONS);
-        LinkedList<String> result = new LinkedList<>();
-        try {
-            Chat chat = contact.getPrivateConversation();
-            List<ChatMessage> listOfmsg = chat.getAllMessages();
-            for (ChatMessage cm : listOfmsg) {
-                if (cm.getContent().asPlaintext().contains(word)) {
-                    result.add(cm.getContent().asPlaintext());
-                }
-            }
-            return result;
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        } catch (ChatNotFoundException e) {
-            e.printStackTrace();
-        }
-        return result;
+        return skype.getOrLoadContact(userName).getPrivateConversation();
     }
 }
 

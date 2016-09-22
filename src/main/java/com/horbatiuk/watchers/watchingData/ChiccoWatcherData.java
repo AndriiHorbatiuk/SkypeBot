@@ -23,23 +23,11 @@ public final class ChiccoWatcherData implements iWatching {
 
 
     public String getData() {
-        if (data.equals("")) {
-            LinkedList<String> listOfMsgs = SkypeUtils.getListOfMessagesWithWord(SkypeUtils.skypeLogin(SkypeUtils.authorisationToSkype()),
-                    "http://chicco.com.ua");
-            data = listOfMsgs.getLast();
-        }
         return data;
     }
 
     public void setData(String data) {
         this.data = data;
-        try {
-            SkypeUtils.sendMessageToChat(SkypeUtils.getChatFromUserName(SkypeConstants.USER_TO_SEND_NOTIFICATIONS),"Запоминаю url баннера: http://www.chicco.com.ua" + data);
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        } catch (ChatNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getMsg() {

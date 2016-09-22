@@ -11,6 +11,7 @@ public class SkypeConstants {
     public final static String USERNAME = "allaskypelogin";
     public final static String PASSWORD = "zxcvbn1";
     public final static String USER_TO_SEND_NOTIFICATIONS = "menwyy";
+    public final static String CHAT_ID_TO_SEND_NOTIFICATIONS = "8:menwyy";
 
 
 
