@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="skype4j-0.2.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/skype4j-0.2.0-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/skype4j-0.2.0-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

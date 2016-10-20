@@ -1,18 +1,12 @@
 package com.horbatiuk.skype;
 
-
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.SkypeBuilder;
 import com.samczsun.skype4j.chat.Chat;
-import com.samczsun.skype4j.chat.messages.ChatMessage;
 import com.samczsun.skype4j.exceptions.*;
 import com.samczsun.skype4j.formatting.Message;
 import com.samczsun.skype4j.formatting.Text;
 import com.samczsun.skype4j.participants.info.Contact;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public class SkypeUtils {
 
@@ -37,13 +31,13 @@ public class SkypeUtils {
         return authorizedSkype;
     }
 
-    public static void sendMessageToUser(Skype logedInSkype, String userName, String message) {
-        Contact contact = null;
+    public static void sendMessageToUser(String userName, String message) {
+        Contact contact;
         try {
-            contact = logedInSkype.getOrLoadContact(userName);
+            contact = SkypeStart.skype.getOrLoadContact(userName);
             Chat chat = contact.getPrivateConversation();
             chat.sendMessage(Message.create().with(Text.plain(message)));
-            logedInSkype.logout();
+            SkypeStart.skype.logout();
         } catch (ConnectionException e) {
             e.printStackTrace();
         } catch (ChatNotFoundException e) {
@@ -57,7 +51,7 @@ public class SkypeUtils {
     }
 
     public static Skype addContactToContactList(Skype logedInSkype, String userName) {
-        Contact contact = null;
+        Contact contact;
         try {
             contact = logedInSkype.getOrLoadContact(SkypeConstants.SKYPEUSER);
             if (!contact.isAuthorized()) {
